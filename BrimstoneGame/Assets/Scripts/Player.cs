@@ -15,7 +15,8 @@ public class Player : MonoBehaviour { //Not sure what MonoBehavior is but it was
 	float wallTouchRadius = 0.1f;
 	public LayerMask whatIsGround;
 	public LayerMask whatIsWall;
-	public Transform wallCheck2; 
+	public Transform wallCheck2;
+	public Animator animator;
 	
 	
 	private Rigidbody2D _rigidbody;
@@ -23,7 +24,8 @@ public class Player : MonoBehaviour { //Not sure what MonoBehavior is but it was
     // Start is called before the first frame update
     private void Start() {
         _rigidbody = GetComponent<Rigidbody2D>(); //need to this interact with stuff using physics engine(jumping etc, not the same as collision)
-    }
+		
+	}
 
     // Update is called once per frame
 	private void FixedUpdate() {
@@ -87,7 +89,27 @@ public class Player : MonoBehaviour { //Not sure what MonoBehavior is but it was
 		if (Input.GetButtonDown("Jump") && touchingWall2)
 		{
 			WallJump();
+
+			// animation code start 
 		}
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+			animator.SetBool("movingRight", true);
+        }
+        if (Input.GetKeyUp(KeyCode.RightArrow))
+        {
+			animator.SetBool("movingRight", false);
+        }
+		if (Input.GetKeyDown(KeyCode.LeftArrow))
+		{
+			animator.SetBool("movingLeft", true);
+		}
+		if (Input.GetKeyUp(KeyCode.LeftArrow))
+		{
+			animator.SetBool("movingLeft", false);
+		}
+			//animation code end
+
 	}
 	
 	void WallJump() {
