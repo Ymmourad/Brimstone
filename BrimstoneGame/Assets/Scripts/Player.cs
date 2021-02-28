@@ -34,24 +34,16 @@ public class Player : MonoBehaviour { //Not sure what MonoBehavior is but it was
 		touchingWall = Physics2D.OverlapCircle(wallCheck.position, wallTouchRadius, whatIsWall);
 		touchingWall2 = Physics2D.OverlapCircle(wallCheck2.position, wallTouchRadius, whatIsWall);
 
-		if (touchingWall) {
+		if(touchingWall || touchingWall2) {
 			grounded = false;
 			_rigidbody.gravityScale = 0;
 			_rigidbody.position += new Vector2(movement,-1/2) * Time.deltaTime * MovementSpeed;
 		}
-        if (touchingWall2)
-        {
-			grounded = false;
-			_rigidbody.gravityScale = 0;
-			_rigidbody.position += new Vector2(movement, -1 / 2) * Time.deltaTime * MovementSpeed; 
-        }
-		if(!touchingWall) {
+       
+		if(!touchingWall && !touchingWall2) {
 			_rigidbody.gravityScale = 2;
 		}
-		if (!touchingWall2)
-		{
-			_rigidbody.gravityScale = 2;
-		}
+		
 
 
 
@@ -88,7 +80,7 @@ public class Player : MonoBehaviour { //Not sure what MonoBehavior is but it was
 
 		if (Input.GetButtonDown("Jump") && touchingWall2)
 		{
-			WallJump();
+			WallJump2();
 
 			// animation code start 
 		}
@@ -114,5 +106,9 @@ public class Player : MonoBehaviour { //Not sure what MonoBehavior is but it was
 	
 	void WallJump() {
 		_rigidbody.AddForce(new Vector2(-WallJumpForce, JumpForce), ForceMode2D.Impulse);
+	}
+	
+	void WallJump2() {
+		_rigidbody.AddForce(new Vector2(WallJumpForce, JumpForce), ForceMode2D.Impulse);
 	}
 }
