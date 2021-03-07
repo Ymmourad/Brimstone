@@ -17,6 +17,7 @@ public class Player : MonoBehaviour { //Not sure what MonoBehavior is but it was
 	public LayerMask whatIsWall;
 	public Transform wallCheck2;
 	public Animator animator;
+	bool hasJumped = false;
 	
 	
 	private Rigidbody2D _rigidbody;
@@ -34,7 +35,7 @@ public class Player : MonoBehaviour { //Not sure what MonoBehavior is but it was
 		touchingWall = Physics2D.OverlapCircle(wallCheck.position, wallTouchRadius, whatIsWall);
 		touchingWall2 = Physics2D.OverlapCircle(wallCheck2.position, wallTouchRadius, whatIsWall);
 
-		if(touchingWall || touchingWall2) {
+		if(touchingWall || touchingWall2 && _rigidbody.velocity.y < -0.1) {
 			grounded = false;
 			_rigidbody.gravityScale = 0;
 			_rigidbody.position += new Vector2(movement,-1/2) * Time.deltaTime * MovementSpeed;
@@ -69,19 +70,23 @@ public class Player : MonoBehaviour { //Not sure what MonoBehavior is but it was
 		
         //var movement = Input.GetAxis("Horizontal");
 		//transform.position += new Vector3(movement,0,0) * Time.deltaTime * MovementSpeed; //Used to move with arrow keys
+		if(grounded) {
+			hasJumped = false;
+		}
 		
 		if(Input.GetButtonDown("Jump") && grounded) {//Mathf.Abs(_rigidbody.velocity.y) < .001f) { //Makes sure jump(space bar) only works when you're on the ground
 			_rigidbody.AddForce(new Vector2(0, JumpForce), ForceMode2D.Impulse); //Implulse Force for jumping (Not sure about other types of forces)
 		}
 		
-		if(Input.GetButtonDown("Jump") && touchingWall) {
+		if(Input.GetButtonDown("Jump") && touchingWall && hasJumped == false) {
 			WallJump();
+			hasJumped = true;
 		}
 
-		if (Input.GetButtonDown("Jump") && touchingWall2)
+		if (Input.GetButtonDown("Jump") && touchingWall2 && hasJumped == false)
 		{
 			WallJump2();
-
+			hasJumped = true;
 			// animation code start 
 		}
         if (Input.GetKeyDown(KeyCode.RightArrow))
