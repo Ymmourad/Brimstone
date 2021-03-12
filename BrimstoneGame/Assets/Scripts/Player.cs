@@ -17,15 +17,13 @@ public class Player : MonoBehaviour { //Not sure what MonoBehavior is but it was
 	public LayerMask whatIsWall;
 	public Transform wallCheck2;
 	public Animator animator;
-	bool hasJumped = false;
-	
-	
+	public bool hasJumped = false;	
 	private Rigidbody2D _rigidbody;
-	
+
     // Start is called before the first frame update
     private void Start() {
         _rigidbody = GetComponent<Rigidbody2D>(); //need to this interact with stuff using physics engine(jumping etc, not the same as collision)
-		
+	 
 	}
 
     // Update is called once per frame
@@ -35,14 +33,19 @@ public class Player : MonoBehaviour { //Not sure what MonoBehavior is but it was
 		touchingWall = Physics2D.OverlapCircle(wallCheck.position, wallTouchRadius, whatIsWall);
 		touchingWall2 = Physics2D.OverlapCircle(wallCheck2.position, wallTouchRadius, whatIsWall);
 
-		if(touchingWall || touchingWall2 && _rigidbody.velocity.y < -0.1) {
+		if(touchingWall || touchingWall2) {
 			grounded = false;
 			_rigidbody.gravityScale = 0;
-			_rigidbody.position += new Vector2(movement,-1/2) * Time.deltaTime * MovementSpeed;
+			//_rigidbody.position += new Vector2(movement,-1/2) * Time.deltaTime * MovementSpeed;
+			Vector2 v = _rigidbody.velocity;
+ 			v.y = -1.5F;
+ 			_rigidbody.velocity = v;
+
 		}
        
 		if(!touchingWall && !touchingWall2) {
 			_rigidbody.gravityScale = 2;
+
 		}
 		
 
@@ -110,10 +113,12 @@ public class Player : MonoBehaviour { //Not sure what MonoBehavior is but it was
 	}
 	
 	void WallJump() {
+		_rigidbody.velocity = new Vector2(5f,5f);
 		_rigidbody.AddForce(new Vector2(-WallJumpForce, JumpForce), ForceMode2D.Impulse);
 	}
 	
 	void WallJump2() {
+		_rigidbody.velocity = new Vector2(5f,5f);
 		_rigidbody.AddForce(new Vector2(WallJumpForce, JumpForce), ForceMode2D.Impulse);
 	}
 }
