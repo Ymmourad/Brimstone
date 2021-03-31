@@ -202,6 +202,15 @@ Tilemap:
       m_TileColorIndex: 2
       m_TileObjectToInstantiateIndex: 65535
       m_AllTileFlags: 1073741827
+  - first: {x: -5, y: 0, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 44
+      m_TileSpriteIndex: 44
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      m_AllTileFlags: 1073741825
   - first: {x: -3, y: 0, z: 0}
     second:
       serializedVersion: 2
@@ -351,6 +360,15 @@ Tilemap:
       serializedVersion: 2
       m_TileIndex: 26
       m_TileSpriteIndex: 23
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      m_AllTileFlags: 1073741825
+  - first: {x: -7, y: 5, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 43
+      m_TileSpriteIndex: 43
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -596,6 +614,10 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 769ebf1da9a665f40a47f8071cbd803a, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 024424a3717bb6d43a4cdbc506c721d7, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: 8eb14a2903aa42c4aa15c88925c573a6, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: 4743fa7ef61fa4b459b147330635199f, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: 71bb64718b77e7d43a7f1e63834a5d97, type: 3}
@@ -683,8 +705,12 @@ Tilemap:
     m_Data: {fileID: 21300000, guid: d76fedb4b4d45e44eb8043321e67c66f, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: 4e833fed6a9d3d04182970cc8f3dce30, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: 21300000, guid: 3400abf31f730794bbdfeaacda546a53, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: 21300000, guid: 215f983a0ca373346917a6534f5a7495, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 47
+  - m_RefCount: 49
     m_Data:
       e00: 1
       e01: 0
@@ -703,7 +729,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 42
+  - m_RefCount: 44
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   - m_RefCount: 0
     m_Data: {r: 0, g: 0, b: 0, a: 0}
