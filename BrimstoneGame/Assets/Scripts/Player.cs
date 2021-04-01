@@ -19,9 +19,10 @@ public class Player : MonoBehaviour { //Not sure what MonoBehavior is but it was
 	public Animator animator;
 	public bool hasJumped = false;	
 	private Rigidbody2D _rigidbody;
+	float horizontalMovement = 0f; 
 
-    // Start is called before the first frame update
-    private void Start() {
+	// Start is called before the first frame update
+	private void Start() {
         _rigidbody = GetComponent<Rigidbody2D>(); //need to this interact with stuff using physics engine(jumping etc, not the same as collision)
 	 
 	}
@@ -32,6 +33,17 @@ public class Player : MonoBehaviour { //Not sure what MonoBehavior is but it was
 		grounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
 		touchingWall = Physics2D.OverlapCircle(wallCheck.position, wallTouchRadius, whatIsWall);
 		touchingWall2 = Physics2D.OverlapCircle(wallCheck2.position, wallTouchRadius, whatIsWall);
+
+		// this block of code will check if the player is moving right or left and scale x according to it
+		if(movement < 0)
+        {
+			transform.localScale = new Vector3((float)-1.8,(float) 1.8, 0);
+        }
+        if(movement > 0)
+        {
+			transform.localScale = new Vector3((float)1.8, (float)1.8, 0);
+        }
+		
 
 		if(touchingWall || touchingWall2) {
 			grounded = false;
@@ -49,7 +61,7 @@ public class Player : MonoBehaviour { //Not sure what MonoBehavior is but it was
 		}
 		
 
-
+		
 
 
 		//_rigidbody.velocity = new Vector2(Input.GetAxisRaw("Horizontal"),_rigidbody.velocity.y);
@@ -64,51 +76,49 @@ public class Player : MonoBehaviour { //Not sure what MonoBehavior is but it was
 	}
 	
     private void Update() {
+
+
+
+		//animation for moving right and left
+		horizontalMovement = Input.GetAxisRaw("Horizontal");
+		animator.SetFloat("speed", Mathf.Abs(horizontalMovement));
+
+       
+
 		//grounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
 		//touchingWall = Physics2D.OverlapCircle(wallCheck.position, wallTouchRadius, whatIsWall);
-		
+
 		//if(touchingWall) {
 		//	grounded = false;
 		//}
-		
-        //var movement = Input.GetAxis("Horizontal");
+
+		//var movement = Input.GetAxis("Horizontal");
 		//transform.position += new Vector3(movement,0,0) * Time.deltaTime * MovementSpeed; //Used to move with arrow keys
-		if(grounded) {
+		if (grounded) {
 			hasJumped = false;
+			
 		}
+        
 		
 		if(Input.GetButtonDown("Jump") && grounded) {//Mathf.Abs(_rigidbody.velocity.y) < .001f) { //Makes sure jump(space bar) only works when you're on the ground
+			
 			_rigidbody.AddForce(new Vector2(0, JumpForce), ForceMode2D.Impulse); //Implulse Force for jumping (Not sure about other types of forces)
+			animator.SetBool("isJumping", true);
 		}
 		
 		if(Input.GetButtonDown("Jump") && touchingWall && hasJumped == false) {
 			WallJump();
 			hasJumped = true;
+			
 		}
 
 		if (Input.GetButtonDown("Jump") && touchingWall2 && hasJumped == false)
 		{
 			WallJump2();
 			hasJumped = true;
-			// animation code start 
+			
 		}
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-			animator.SetBool("movingRight", true);
-        }
-        if (Input.GetKeyUp(KeyCode.RightArrow))
-        {
-			animator.SetBool("movingRight", false);
-        }
-		if (Input.GetKeyDown(KeyCode.LeftArrow))
-		{
-			animator.SetBool("movingLeft", true);
-		}
-		if (Input.GetKeyUp(KeyCode.LeftArrow))
-		{
-			animator.SetBool("movingLeft", false);
-		}
-			//animation code end
+        
 
 	}
 	
