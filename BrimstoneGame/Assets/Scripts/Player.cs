@@ -19,7 +19,9 @@ public class Player : MonoBehaviour { //Not sure what MonoBehavior is but it was
 	public Animator animator;
 	public bool hasJumped = false;	
 	private Rigidbody2D _rigidbody;
-	float horizontalMovement = 0f; 
+	float horizontalMovement = 0f;
+	private bool extraLife = false; //this variabe checks if the player collects the heart
+	private bool hasKey = false; // checks for key 
 
 	// Start is called before the first frame update
 	private void Start() {
@@ -131,4 +133,33 @@ public class Player : MonoBehaviour { //Not sure what MonoBehavior is but it was
 		_rigidbody.velocity = new Vector2(5f,5f);
 		_rigidbody.AddForce(new Vector2(WallJumpForce, JumpForce), ForceMode2D.Impulse);
 	}
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("apple"))
+        {
+			JumpForce += 10;
+			Destroy(collision.gameObject);
+			
+        }
+        if (collision.CompareTag("heart"))
+        {
+			extraLife = true; 
+			Destroy(collision.gameObject);
+        }
+        if (collision.CompareTag("key"))
+        {
+			hasKey = true;
+			Destroy(collision.gameObject);
+        }
+
+        if (collision.CompareTag("chest"))
+        {
+            if (hasKey)
+            {
+				Destroy(collision.gameObject);
+            }
+        }
+
+    }
 }
