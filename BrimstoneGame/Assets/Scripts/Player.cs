@@ -1,6 +1,7 @@
 ﻿using System.Collections;          //I don't know what these are specifically, but they were already here when I created a new script in Unity 
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour { //Not sure what MonoBehavior is but it was here when I created the script
 	public float MovementSpeed = 1; //These floats are variables that actually appear within Unity, you can easily change them when you are in Unity
@@ -20,8 +21,18 @@ public class Player : MonoBehaviour { //Not sure what MonoBehavior is but it was
 	public bool hasJumped = false;	
 	private Rigidbody2D _rigidbody;
 	float horizontalMovement = 0f;
-	private bool extraLife = false; //this variabe checks if the player collects the heart
-	private bool hasKey = false; // checks for key 
+	private bool extraLife = false; //this variable checks if the player collects the heart
+	public bool hasKey = false; // checks for key 
+	
+	public bool touchingSpike = false;
+	public Transform spikeCheck;
+	float spikeRadius = 0.1f;
+	public LayerMask whatIsSpike;
+	
+	public bool touchingGoal = false;
+	public Transform goalCheck;
+	float goalRadius = 1f;
+	public LayerMask whatIsGoal;
 
 	// Start is called before the first frame update
 	private void Start() {
@@ -35,6 +46,8 @@ public class Player : MonoBehaviour { //Not sure what MonoBehavior is but it was
 		grounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
 		touchingWall = Physics2D.OverlapCircle(wallCheck.position, wallTouchRadius, whatIsWall);
 		touchingWall2 = Physics2D.OverlapCircle(wallCheck2.position, wallTouchRadius, whatIsWall);
+		touchingSpike = Physics2D.OverlapCircle(spikeCheck.position, spikeRadius, whatIsSpike);
+		touchingGoal = Physics2D.OverlapCircle(goalCheck.position, goalRadius, whatIsGoal);
 
 		// this block of code will check if the player is moving right or left and scale x according to it
 		if(movement < 0)
@@ -46,6 +59,10 @@ public class Player : MonoBehaviour { //Not sure what MonoBehavior is but it was
 			transform.localScale = new Vector3((float)1.8, (float)1.8, 0);
         }
 		
+		if(touchingGoal) {
+			MovementSpeed = 6.5f;
+			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+		}
 
 		if(touchingWall || touchingWall2) {
 			grounded = false;
@@ -62,7 +79,9 @@ public class Player : MonoBehaviour { //Not sure what MonoBehavior is but it was
 
 		}
 		
-
+		if(touchingSpike) {
+			Application.LoadLevel(Application.loadedLevel);
+		}
 		
 
 
@@ -138,7 +157,7 @@ public class Player : MonoBehaviour { //Not sure what MonoBehavior is but it was
     {
         if (collision.CompareTag("apple"))
         {
-			JumpForce += 10;
+			MovementSpeed = 10;
 			Destroy(collision.gameObject);
 			
         }
@@ -155,10 +174,7 @@ public class Player : MonoBehaviour { //Not sure what MonoBehavior is but it was
 
         if (collision.CompareTag("chest"))
         {
-            if (hasKey)
-            {
-				Destroy(collision.gameObject);
-            }
+            Destroy(collision.gameObject);
         }
 
     }
