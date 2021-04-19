@@ -9,6 +9,7 @@ TagManager:
   - heart
   - key
   - chest
+  - startButton
   layers:
   - Default
   - TransparentFX
