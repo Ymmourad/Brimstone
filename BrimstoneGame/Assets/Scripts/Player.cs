@@ -37,6 +37,7 @@ public class Player : MonoBehaviour { //Not sure what MonoBehavior is but it was
 	// Start is called before the first frame update
 	private void Start() {
         _rigidbody = GetComponent<Rigidbody2D>(); //need to this interact with stuff using physics engine(jumping etc, not the same as collision)
+		SceneManager.LoadScene(7);
 	 
 	}
 
