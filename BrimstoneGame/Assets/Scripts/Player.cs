@@ -24,6 +24,8 @@ public class Player : MonoBehaviour { //Not sure what MonoBehavior is but it was
 	private bool extraLife = false; //this variable checks if the player collects the heart
 	public bool hasKey = false; // checks for key 
 	
+	
+	
 	public bool touchingSpike = false;
 	public Transform spikeCheck;
 	float spikeRadius = 0.1f;
@@ -37,7 +39,13 @@ public class Player : MonoBehaviour { //Not sure what MonoBehavior is but it was
 	// Start is called before the first frame update
 	private void Start() {
         _rigidbody = GetComponent<Rigidbody2D>(); //need to this interact with stuff using physics engine(jumping etc, not the same as collision)
-		SceneManager.LoadScene(7);
+		/*if(SceneManager.GetActiveScene().buildIndex == 6)
+        {
+			GameObject.Find("level6Apple").SetActive(false);
+			
+        }*/
+			
+			
 	 
 	}
 
@@ -62,7 +70,12 @@ public class Player : MonoBehaviour { //Not sure what MonoBehavior is but it was
 		
 		if(touchingGoal) {
 			MovementSpeed = 6.5f;
-			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+			if (SceneManager.GetActiveScene().buildIndex == 7) {
+				SceneManager.LoadScene(0);
+			}
+			
+				SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+			
 		}
 
 		if(touchingWall || touchingWall2) {
@@ -173,10 +186,13 @@ public class Player : MonoBehaviour { //Not sure what MonoBehavior is but it was
 			Destroy(collision.gameObject);
         }
 
-        if (collision.CompareTag("chest"))
+       /* if (collision.CompareTag("chest"))
         {
+
             Destroy(collision.gameObject);
-        }
+			GameObject.Find("level6Apple").SetActive(true);
+
+		}*/
 
     }
 }
